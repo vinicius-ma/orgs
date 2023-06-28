@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Orgs</string>
-    <string name="title_activity_product_form">ProductFormActivity</string>
+    <string name="activity_product_form_name_hint">Name</string>
+    <string name="activity_product_form_descr_hint">Description</string>
+    <string name="activity_product_form_price_hint">Value</string>
+    <string name="activity_product_form_save_button">Save</string>
+    <string name="activity_products_list_fab_description">Add product</string>
 </resources>

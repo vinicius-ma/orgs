@@ -7,7 +7,7 @@
     >
     <!-- NOME -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_main_recyclerview"
+        android:id="@+id/activity_product_list_recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -20,7 +20,7 @@
         />
     <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_main_fab_new_product"
+        android:id="@+id/activity_product_form_button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
         android:layout_margin="16dp"
         android:foreground="@android:drawable/ic_input_add"
         android:foregroundTint="@color/black"
-        android:contentDescription="Adicionar produto"
+        android:contentDescription="@string/activity_products_list_fab_description"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Orgs"
         tools:targetApi="31">
-        <activity android:name=".ui.activity.ui.ProductFormActivity" />
+        <activity android:name=".ui.activity.ProductFormActivity" />
         <activity
-            android:name=".ui.activity.ui.ProductsListActivity"
+            android:name=".ui.activity.ProductsListActivity"
             android:exported="true"
             >
             <intent-filter>

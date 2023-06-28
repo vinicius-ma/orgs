@@ -1,14 +1,11 @@
-package br.com.vinma.orgs.ui.activity.ui
+package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import br.com.vinma.orgs.R
 import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductsListBinding
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProductsListActivity: AppCompatActivity() {
 
@@ -29,7 +26,7 @@ class ProductsListActivity: AppCompatActivity() {
     }
 
     private fun configureFab() {
-        binding.activityMainFabNewProduct.setOnClickListener {
+        binding.activityProductFormButtonSave.setOnClickListener {
             startProductFormActivity()
         }
     }
@@ -40,7 +37,7 @@ class ProductsListActivity: AppCompatActivity() {
     }
 
     private fun configureAdapter() {
-        val recyclerView = binding.activityMainRecyclerview
+        val recyclerView = binding.activityProductListRecyclerview
         recyclerView.adapter = adapter
     }
 }

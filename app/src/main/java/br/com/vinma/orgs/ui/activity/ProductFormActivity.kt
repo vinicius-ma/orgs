@@ -1,4 +1,4 @@
-package br.com.vinma.orgs.ui.activity.ui
+package br.com.vinma.orgs.ui.activity
 
 import android.os.Bundle
 import android.widget.Button

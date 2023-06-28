@@ -40,7 +40,7 @@ class ProductListAdapter(
 
         fun bind(product: Product) {
             binding.productItemName.text = product.name
-            binding.productItemDescription.text = product.description
+            binding.productItemDescr.text = product.description
             binding.productItemPrice.text = product.formattedPrice()
         }
     }

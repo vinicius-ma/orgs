@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Orgs</string>
+    <string name="activity_product_form_name_hint">Nome</string>
+    <string name="activity_product_form_descr_hint">Descrição</string>
+    <string name="activity_product_form_price_hint">Valor</string>
+    <string name="activity_product_form_save_button">Salvar</string>
+    <string name="activity_products_list_fab_description">Adicionar produto</string>
+</resources>
