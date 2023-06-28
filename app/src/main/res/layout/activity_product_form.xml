@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <!-- PRODUCT NAME -->
+    <EditText
+        android:id="@+id/activity_product_form_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:hint="Nome"
+        android:autofillHints=""
+        android:inputType="textCapWords|textAutoComplete"
+        android:nextFocusForward="@id/activity_product_form_descr"
+        />
+    <!-- PRODUCT DESCRIPTION -->
+    <EditText
+        android:id="@+id/activity_product_form_descr"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/activity_product_form_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/activity_product_form_name"
+        app:layout_constraintEnd_toEndOf="@id/activity_product_form_name"
+        app:layout_constraintVertical_bias="0.0"
+        android:hint="Descrição"
+        android:autofillHints=""
+        android:inputType="textAutoComplete|textCapSentences"
+        android:nextFocusForward="@id/activity_product_form_price"
+        />
+    <!-- PRODUCT PRICE -->
+    <EditText
+        android:id="@+id/activity_product_form_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/activity_product_form_descr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/activity_product_form_name"
+        app:layout_constraintEnd_toEndOf="@id/activity_product_form_name"
+        android:hint="Valor"
+        app:layout_constraintVertical_bias="0.0"
+        android:autofillHints=""
+        android:inputType="numberDecimal"
+        android:nextFocusForward="@id/activity_product_form_button_save"
+        />
+    <Button
+        android:id="@+id/activity_product_form_button_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        app:layout_constraintTop_toBottomOf="@id/activity_product_form_price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/activity_product_form_name"
+        app:layout_constraintEnd_toEndOf="@id/activity_product_form_name"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginBottom="16dp"
+        android:nextFocusForward="@id/activity_product_form_name"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
