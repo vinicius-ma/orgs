@@ -3,11 +3,9 @@ package br.com.vinma.orgs.ui.recyclerview.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.vinma.orgs.R
+import br.com.vinma.orgs.databinding.ProductItemBinding
 import br.com.vinma.orgs.model.Product
 
 class ProductListAdapter(
@@ -17,18 +15,10 @@ class ProductListAdapter(
 
     private val products = products.toMutableList()
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(product: Product) {
-            itemView.findViewById<TextView>(R.id.product_item_name).text = product.name
-            itemView.findViewById<TextView>(R.id.product_item_description).text = product.description
-            itemView.findViewById<TextView>(R.id.product_item_price).text = product.formattedPrice()
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.product_item, parent, false)
-        return ViewHolder(view)
+        val binding = ProductItemBinding.inflate(
+            LayoutInflater.from(context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = products.size
@@ -43,6 +33,16 @@ class ProductListAdapter(
         this.products.clear()
         this.products.addAll(products)
         notifyDataSetChanged()
+    }
+
+    class ViewHolder(private val binding: ProductItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(product: Product) {
+            binding.productItemName.text = product.name
+            binding.productItemDescription.text = product.description
+            binding.productItemPrice.text = product.formattedPrice()
+        }
     }
 
 }
