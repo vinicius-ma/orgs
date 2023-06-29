@@ -7,68 +7,118 @@
     android:fillViewport="true"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-    <!-- PRODUCT NAME -->
-    <EditText
-        android:id="@+id/activity_product_form_name"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:hint="@string/activity_product_form_name_hint"
-        android:autofillHints=""
-        android:inputType="textCapWords|textAutoComplete"
-        android:nextFocusForward="@id/activity_product_form_descr"
-        />
-    <!-- PRODUCT DESCRIPTION -->
-    <EditText
-        android:id="@+id/activity_product_form_descr"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/activity_product_form_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/activity_product_form_name"
-        app:layout_constraintEnd_toEndOf="@id/activity_product_form_name"
-        app:layout_constraintVertical_bias="0.0"
-        android:hint="@string/activity_product_form_descr_hint"
-        android:autofillHints=""
-        android:inputType="textAutoComplete|textCapSentences"
-        android:nextFocusForward="@id/activity_product_form_price"
-        />
-    <!-- PRODUCT PRICE -->
-    <EditText
-        android:id="@+id/activity_product_form_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/activity_product_form_descr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/activity_product_form_name"
-        app:layout_constraintEnd_toEndOf="@id/activity_product_form_name"
-        android:hint="@string/activity_product_form_price_hint"
-        app:layout_constraintVertical_bias="0.0"
-        android:autofillHints=""
-        android:inputType="numberDecimal"
-        android:nextFocusForward="@id/activity_product_form_button_save"
-        />
-    <Button
-        android:id="@+id/activity_product_form_button_save"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/activity_product_form_save_button"
-        app:layout_constraintTop_toBottomOf="@id/activity_product_form_price"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/activity_product_form_name"
-        app:layout_constraintEnd_toEndOf="@id/activity_product_form_name"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginBottom="16dp"
-        android:nextFocusForward="@id/activity_product_form_name"
-        />
+        >
+        <!-- region IMAGEVIEW -->
+            <ImageView
+                android:id="@+id/activity_product_form_image"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                android:clickable="true"
+                android:background="@color/gray"
+                android:contentDescription="@string/product_item_image_descr"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/dialog_form_image_load_default"
+                />
+        <!-- endregion -->
+        <!-- region PRODUCT NAME -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activity_product_form_name_inputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/activity_product_form_image"
+            app:layout_constraintBottom_toTopOf="@id/activity_product_form_button_save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="16dp"
+            app:startIconDrawable="@drawable/baseline_text_fields_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_product_form_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_product_form_name_hint"
+                android:inputType="textCapWords|textAutoComplete"
+                android:nextFocusForward="@id/dialog_form_image_load_url"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <!-- endregion -->
+        <!-- region PRODUCT DESCRIPTION -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activity_product_form_descr_inputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/activity_product_form_name_inputLayout"
+            app:layout_constraintBottom_toTopOf="@id/activity_product_form_button_save"
+            app:layout_constraintStart_toStartOf="@id/activity_product_form_name_inputLayout"
+            app:layout_constraintEnd_toEndOf="@id/activity_product_form_name_inputLayout"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="16dp"
+            app:startIconDrawable="@drawable/baseline_description_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_product_form_descr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_product_form_descr_hint"
+                android:inputType="textAutoComplete|textCapSentences"
+                android:nextFocusForward="@id/activity_product_form_price"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <!-- endregion -->
+        <!-- region PRODUCT PRICE -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_product_form_price_inputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/activity_product_form_descr_inputLayout"
+                app:layout_constraintBottom_toTopOf="@id/activity_product_form_button_save"
+                app:layout_constraintStart_toStartOf="@id/activity_product_form_name_inputLayout"
+                app:layout_constraintEnd_toEndOf="@id/activity_product_form_name_inputLayout"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginTop="16dp"
+                app:startIconDrawable="@drawable/baseline_monetization_on_24"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_product_form_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/activity_product_form_price_hint"
+                    android:inputType="numberDecimal"
+                    android:nextFocusForward="@id/activity_product_form_button_save"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+        <!-- endregion -->
+        <!-- region SAVE BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_product_form_button_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/activity_product_form_name_inputLayout"
+            app:layout_constraintEnd_toEndOf="@id/activity_product_form_name_inputLayout"
+            app:layout_constraintVertical_bias="1.0"
+            android:layout_marginBottom="16dp"
+            android:nextFocusForward="@id/activity_product_form_name"
+            android:text="@string/activity_product_form_save_button"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_bold"
+            app:icon="@android:drawable/ic_menu_save"
+            style="@style/Widget.Material3.Button"
+            />
+        <!-- endregion -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

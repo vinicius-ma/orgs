@@ -2,11 +2,13 @@ package br.com.vinma.orgs.ui.recyclerview.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.vinma.orgs.databinding.ProductItemBinding
 import br.com.vinma.orgs.model.Product
+import coil.load
 
 class ProductListAdapter(
     private val context : Context,
@@ -40,8 +42,9 @@ class ProductListAdapter(
 
         fun bind(product: Product) {
             binding.productItemName.text = product.name
-            binding.productItemDescr.text = product.description
+            binding.productItemDescription.text = product.description
             binding.productItemPrice.text = product.formattedPrice()
+            binding.activityProductFormImage.load("https://www.receitas-sem-fronteiras.com/cache/media/255475-jpg.jpeg/ogresize.jpg")
         }
     }
 

@@ -7,6 +7,7 @@ import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductsListBinding
 import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
+import java.math.BigDecimal
 
 class ProductsListActivity: AppCompatActivity() {
 
@@ -22,7 +23,7 @@ class ProductsListActivity: AppCompatActivity() {
 
         for(i in 1..10) {
             val price = 10 + i + i/100.0
-            dao.add(Product("Produto $i", "Descrição do produto $i", price))
+            dao.add(Product("Produto $i", "Descrição do produto $i", BigDecimal(price)))
         }
     }
 
