@@ -20,7 +20,6 @@ data class Product(
     fun formattedPrice(): String? {
         val formatter = NumberFormat.getCurrencyInstance()
         formatter.currency = Currency.getInstance("BRL")
-
         return formatter.format(price)
     }
 }

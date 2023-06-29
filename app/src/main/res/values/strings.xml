@@ -5,4 +5,7 @@
     <string name="activity_product_form_price_hint">Value</string>
     <string name="activity_product_form_save_button">Save</string>
     <string name="activity_products_list_fab_description">Add product</string>
+    <string name="title_activity_product_form">ProductFormActivity</string>
+    <string name="activity_products_list_fab_content_descr">Adicionar produto</string>
+    <string name="product_item_image_descr">Product image illustration</string>
 </resources>
