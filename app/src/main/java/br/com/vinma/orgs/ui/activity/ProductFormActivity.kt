@@ -3,14 +3,15 @@ package br.com.vinma.orgs.ui.activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import br.com.vinma.orgs.R
 import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductFormBinding
 import br.com.vinma.orgs.databinding.DialogFormImageLoadBinding
 import br.com.vinma.orgs.model.Product
+import coil.ImageLoader
+import coil.decode.ImageDecoderDecoder
 import coil.load
 import java.math.BigDecimal
 
@@ -18,6 +19,7 @@ class ProductFormActivity : AppCompatActivity() {
 
     private val dao: ProductsDao = ProductsDao()
     private val binding by lazy { ActivityProductFormBinding.inflate(layoutInflater) }
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +31,27 @@ class ProductFormActivity : AppCompatActivity() {
 
         binding.activityProductFormImage.bringToFront()
         binding.activityProductFormImage.setOnClickListener {
-            val inflate = DialogFormImageLoadBinding.inflate(layoutInflater)
+            val dialogBinding: DialogFormImageLoadBinding = DialogFormImageLoadBinding.inflate(layoutInflater)
 
-            inflate.dialogFormImageLoadButton.setOnClickListener {
-                val url = inflate.dialogFormImageLoadUrl.text.toString()
-                inflate.dialogFormImageLoadImageView.load(url)
+            dialogBinding.dialogFormImageLoadButton.setOnClickListener {
+                url = dialogBinding.dialogFormImageLoadUrl.text.toString()
+                dialogBinding.dialogFormImageLoadImageView.load(url,
+                    ImageLoader.Builder(this).components{
+                        add(ImageDecoderDecoder.Factory())
+                    }.build()
+                )
             }
 
             AlertDialog.Builder(this)
-                .setView(inflate.root)
-                .setPositiveButton("Confirmar"){_,_ ->}
+                .setView(dialogBinding.root)
+                .setPositiveButton("Confirmar"){_,_ ->
+                    val url = dialogBinding.dialogFormImageLoadUrl.text.toString()
+                    binding.activityProductFormImage.load(url,
+                        ImageLoader.Builder(this).components{
+                            add(ImageDecoderDecoder.Factory())
+                        }.build()
+                    )
+                }
                 .setNegativeButton("Cancelar"){_,_ ->}
                 .show()
         }
@@ -67,6 +80,7 @@ class ProductFormActivity : AppCompatActivity() {
         val nameEt = binding.activityProductFormName
         val descrEt = binding.activityProductFormDescr
         val priceEt = binding.activityProductFormPrice
+        if(url != null)  binding.activityProductFormImage.load(url)
 
         Log.e("TAG", "createProduct: ${nameEt.text}, ${descrEt.text}, ${priceEt.text}")
 
@@ -77,6 +91,6 @@ class ProductFormActivity : AppCompatActivity() {
         var price = BigDecimal.ZERO
         if (priceString.isNotBlank()) price = BigDecimal(priceString)
 
-        return Product(name, descr, price)
+        return Product(name, descr, price, url)
     }
 }

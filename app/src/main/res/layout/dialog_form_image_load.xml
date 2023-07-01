@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,11 +17,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            android:src="@drawable/dialog_form_image_load_default"
             android:background="@color/gray"
-            android:scaleType="fitCenter"
-            android:padding="20dp"
+            android:scaleType="centerCrop"
             android:contentDescription="Image to load"
+            android:src="@mipmap/ic_no_image_form"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_form_image_load_button"

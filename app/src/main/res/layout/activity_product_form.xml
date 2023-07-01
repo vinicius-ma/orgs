@@ -23,8 +23,8 @@
                 android:clickable="true"
                 android:background="@color/gray"
                 android:contentDescription="@string/product_item_image_descr"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/dialog_form_image_load_default"
+                android:scaleType="centerCrop"
+                app:srcCompat="@mipmap/ic_no_image_form"
                 />
         <!-- endregion -->
         <!-- region PRODUCT NAME -->

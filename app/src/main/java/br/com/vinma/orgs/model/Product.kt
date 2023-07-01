@@ -8,6 +8,7 @@ data class Product(
     val name: String,
     val description: String,
     val price: BigDecimal,
+    val url: String? = null
 ){
 
     fun formattedPrice(): String? {

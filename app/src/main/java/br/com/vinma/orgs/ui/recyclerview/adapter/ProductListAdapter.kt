@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.vinma.orgs.databinding.ProductItemBinding
 import br.com.vinma.orgs.model.Product
+import coil.ImageLoader
+import coil.decode.ImageDecoderDecoder
 import coil.load
 
 class ProductListAdapter(
@@ -40,11 +42,17 @@ class ProductListAdapter(
     class ViewHolder(private val binding: ProductItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
+        val context: Context = binding.root.context
+
         fun bind(product: Product) {
             binding.productItemName.text = product.name
             binding.productItemDescription.text = product.description
             binding.productItemPrice.text = product.formattedPrice()
-            binding.activityProductFormImage.load("https://www.receitas-sem-fronteiras.com/cache/media/255475-jpg.jpeg/ogresize.jpg")
+            binding.activityProductFormImage.load(product.url,
+                ImageLoader.Builder(context).components{
+                    add(ImageDecoderDecoder.Factory())
+                }.build()
+            )
         }
     }
 

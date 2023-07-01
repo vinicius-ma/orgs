@@ -23,8 +23,8 @@ class ProductsListActivity: AppCompatActivity() {
 
         for(i in 1..10) {
             val price = 10 + i + i/100.0
-            dao.add(Product("Produto $i", "Descrição do produto $i", BigDecimal(price)))
-        }
+            dao.add(Product("Produto $i", "Descrição do produto $i", BigDecimal(price),
+            "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))}
     }
 
     override fun onResume() {
