@@ -8,6 +8,11 @@ class ProductsDao {
         products.add(product)
     }
 
+    fun findItemByPosition(position: Int): Product? {
+        if(position < 0 || position >= products.size) return null
+        return products[position]
+    }
+
     fun getAll(): List<Product> = products
 
     companion object {

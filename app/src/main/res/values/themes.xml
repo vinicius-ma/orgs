@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Orgs" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Primary brand color. -->
@@ -17,22 +17,26 @@
         <item name="android:textColor">@color/gray_darker</item>
         <item name="actionOverflowMenuStyle">@style/Widget.Material3.PopupMenu</item>
     </style>
-    <style name="Theme.Orgs.View">
-    </style>
+    <style name="Theme.Orgs.View"/>
+
     <style name="Theme.Orgs.View.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.MinWidth">
         <item name="android:fontFamily">@font/montserrat</item>
+        <item name="dialogCornerRadius">16dp</item>
         <item name="buttonBarPositiveButtonStyle">@style/Theme.Orgs.Dialog.Button</item>
         <item name="buttonBarNegativeButtonStyle">@style/Theme.Orgs.Dialog.Button</item>
     </style>
+
     <style name="Theme.Orgs.Text">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+
     <style name="Theme.Orgs.Text.InputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColorHint">@color/gray_lighter</item>
         <item name="startIconTint">@color/gray_lighter</item>
         <item name="boxStrokeColor">@color/colorPrimary</item>
     </style>
+
     <style name="Theme.Orgs.Dialog.Button" parent="Theme.Orgs">
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/colorPrimary</item>

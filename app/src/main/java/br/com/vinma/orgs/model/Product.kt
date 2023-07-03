@@ -1,5 +1,6 @@
 package br.com.vinma.orgs.model
 
+import java.io.Serializable
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.Currency
@@ -9,7 +10,7 @@ data class Product(
     val description: String,
     val price: BigDecimal,
     val url: String? = null
-){
+): Serializable{
 
     fun formattedPrice(): String? {
         val formatter = NumberFormat.getCurrencyInstance()

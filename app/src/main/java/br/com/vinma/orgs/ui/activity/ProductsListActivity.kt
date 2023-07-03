@@ -2,7 +2,9 @@ package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductsListBinding
 import br.com.vinma.orgs.model.Product
@@ -23,7 +25,8 @@ class ProductsListActivity: AppCompatActivity() {
 
         for(i in 1..10) {
             val price = 10 + i + i/100.0
-            dao.add(Product("Produto $i", "Descrição do produto $i", BigDecimal(price),
+            val description = LoremIpsum(200 + 10 * i).values.toList()[0]
+            dao.add(Product("Produto $i", description, BigDecimal(price),
             "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))}
     }
 
@@ -44,6 +47,14 @@ class ProductsListActivity: AppCompatActivity() {
     }
 
     private fun configureAdapter() {
+        adapter.onItemClickListener = { position ->
+            val product = dao.findItemByPosition(position)
+            Log.e("TAG_DEBUG", "onItemClick: clicked $position (${product?.name})")
+            val intent = Intent(this@ProductsListActivity, ProductDetailsActivity::class.java)
+            intent.putExtra("KEY_PRODUCT", product)
+            startActivity(intent)
+        }
+
         val recyclerView = binding.activityProductListRecyclerview
         recyclerView.adapter = adapter
     }

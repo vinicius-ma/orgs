@@ -11,8 +11,10 @@ import br.com.vinma.orgs.model.Product
 
 class ProductListAdapter(
     private val context : Context,
-    products : List<Product>
+    products : List<Product>,
 ) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
+
+    lateinit var onItemClickListener: (position: Int) -> Unit
 
     private val products = products.toMutableList()
 
@@ -36,17 +38,24 @@ class ProductListAdapter(
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val binding: ProductItemBinding)
+    inner class ViewHolder(private val binding: ProductItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         private val context: Context = binding.root.context
+        private lateinit var product: Product
+        init {
+            itemView.setOnClickListener {
+                if (::product.isInitialized) onItemClickListener(adapterPosition)
+            }
+        }
 
         fun bind(product: Product) {
+            this.product = product
+
             binding.productItemName.text = product.name
             binding.productItemDescription.text = product.description
             binding.productItemPrice.text = product.formattedPrice()
             binding.activityProductFormImage.loadImageOrGifWithFallBacks(context, product.url)
         }
     }
-
 }
