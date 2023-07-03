@@ -6,7 +6,6 @@ import br.com.vinma.orgs.R
 import coil.ImageLoader
 import coil.decode.ImageDecoderDecoder
 import coil.load
-import com.google.android.material.color.utilities.MaterialDynamicColors.background
 
 fun ImageView.loadImageOrGifWithFallBacks(context: Context,url:String?=null){
     load(url, imageLoaderWithGifs(context) ){

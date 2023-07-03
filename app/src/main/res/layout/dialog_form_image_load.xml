@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.0"
             android:scaleType="centerCrop"
-            android:contentDescription="Image to load"
+            android:contentDescription="@string/image_to_load"
             android:background="@color/ic_image_add_background"
             android:src="@drawable/ic_image_add_foreground"
             />
@@ -31,7 +31,7 @@
             app:layout_constraintBottom_toBottomOf="@id/dialog_form_image_load_imageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Carregar"
+            android:text="@string/dialog_form_image_load_button"
             android:fontFamily="@font/montserrat"
             app:icon="@drawable/baseline_refresh_24"
             />
@@ -53,7 +53,7 @@
                 android:id="@+id/dialog_form_image_load_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="URL da imagem"
+                android:hint="@string/dialog_form_image_load_url_hint"
                 android:inputType="textUri"
                 android:nextFocusForward="@id/activity_product_form_price"
                 style="@style/Theme.Orgs.Text"
