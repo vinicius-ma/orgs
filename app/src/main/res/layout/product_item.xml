@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_weight="0.3"
         android:contentDescription="@string/product_item_image_descr"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_no_image"
+        android:src="@mipmap/ic_image_add_adapter"
         />
     <!-- endregion  -->
     <!-- region PRODUCT ITEM NAME -->

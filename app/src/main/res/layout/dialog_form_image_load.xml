@@ -20,7 +20,7 @@
             android:background="@color/gray"
             android:scaleType="centerCrop"
             android:contentDescription="Image to load"
-            android:src="@mipmap/ic_no_image_form"
+            android:src="@mipmap/ic_image_add"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_form_image_load_button"

@@ -24,7 +24,7 @@
                 android:background="@color/gray"
                 android:contentDescription="@string/product_item_image_descr"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_no_image_form"
+                app:srcCompat="@mipmap/ic_image_add"
                 />
         <!-- endregion -->
         <!-- region PRODUCT NAME -->
