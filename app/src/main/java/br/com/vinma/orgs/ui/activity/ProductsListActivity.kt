@@ -1,14 +1,15 @@
-package br.com.vinma.orgs.ui.activity.ui
+package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import br.com.vinma.orgs.R
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductsListBinding
+import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.math.BigDecimal
 
 class ProductsListActivity: AppCompatActivity() {
 
@@ -21,6 +22,12 @@ class ProductsListActivity: AppCompatActivity() {
         setContentView(binding.root)
         configureAdapter()
         configureFab()
+
+        for(i in 1..10) {
+            val price = 10 + i + i/100.0
+            val description = LoremIpsum(200 + 10 * i).values.toList()[0]
+            dao.add(Product("Produto $i", description, BigDecimal(price),
+            "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))}
     }
 
     override fun onResume() {
@@ -29,7 +36,7 @@ class ProductsListActivity: AppCompatActivity() {
     }
 
     private fun configureFab() {
-        binding.activityMainFabNewProduct.setOnClickListener {
+        binding.activityProductFormButtonSave.setOnClickListener {
             startProductFormActivity()
         }
     }
@@ -40,7 +47,15 @@ class ProductsListActivity: AppCompatActivity() {
     }
 
     private fun configureAdapter() {
-        val recyclerView = binding.activityMainRecyclerview
+        adapter.onItemClickListener = { position ->
+            val product = dao.findItemByPosition(position)
+            Log.e("TAG_DEBUG", "onItemClick: clicked $position (${product?.name})")
+            val intent = Intent(this@ProductsListActivity, ProductDetailsActivity::class.java)
+            intent.putExtra("KEY_PRODUCT", product)
+            startActivity(intent)
+        }
+
+        val recyclerView = binding.activityProductListRecyclerview
         recyclerView.adapter = adapter
     }
 }

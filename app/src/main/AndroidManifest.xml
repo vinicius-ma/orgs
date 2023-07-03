@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -11,10 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Orgs"
-        tools:targetApi="31">
-        <activity android:name=".ui.activity.ui.ProductFormActivity" />
+        tools:targetApi="31"
+        >
+        <activity android:name=".ui.activity.ProductFormActivity"
+            android:theme="@style/Theme.Orgs"
+            />
+        <activity android:name=".ui.activity.ProductDetailsActivity"
+            android:theme="@style/Theme.Orgs"
+            />
         <activity
-            android:name=".ui.activity.ui.ProductsListActivity"
+            android:name=".ui.activity.ProductsListActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -22,6 +31,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

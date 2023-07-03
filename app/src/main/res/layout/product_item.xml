@@ -1,79 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
     android:layout_marginHorizontal="8dp"
-    android:paddingVertical="5dp"
-    android:paddingHorizontal="8dp"
-    android:background="@color/cardview_shadow_end_color"
-    app:cardBackgroundColor="@color/purple_200"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="8dp"
+    android:elevation="8dp"
+    style="@style/Theme.Orgs.View"
+    android:clickable="true"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Theme.Orgs.View"
         >
-        <!-- PRODUCT ITEM NAME -->
-        <TextView
-            android:id="@+id/product_item_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/product_item_price_cardView"
-            app:layout_constraintVertical_bias="0.0"
-            android:layout_marginTop="3dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="5dp"
-            tools:text="Salada mista"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/primary_text_light"
-            />
-        <!-- PRODUCT ITEM DESCRIPTION -->
-        <TextView
-            android:id="@+id/product_item_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/product_item_name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/product_item_name"
-            app:layout_constraintEnd_toEndOf="@id/product_item_name"
-            android:layout_marginBottom="3dp"
-            tools:text="Laranja, banana e maçã"
-            android:textStyle="italic"
-            android:textSize="12sp"
-            android:textColor="@android:color/secondary_text_light"
-            />
-        <!-- PRODUCT ITEM PRICE CARD VIEW -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/product_item_price_cardView"
-            android:layout_width="95dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/product_item_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:cardCornerRadius="0dp"
-            >
-            <!-- PRODUCT ITEM PRICE -->
-            <TextView
-                android:id="@+id/product_item_price"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:gravity="center"
-                tools:text="R$ 5,00"
-                android:textColor="@android:color/holo_red_dark"
-                android:textStyle="bold"
-                android:autoSizeTextType="uniform"
-                android:background="@android:color/darker_gray"
-                />
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+    <!--  region IMAGEVIEW -->
+    <ImageView
+        android:id="@+id/activity_product_form_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/product_item_name"
+        app:layout_constraintHorizontal_weight="0.3"
+        android:contentDescription="@string/product_item_image_descr"
+        android:scaleType="centerCrop"
+        android:background="@color/ic_image_add_adapter_background"
+        android:src="@drawable/ic_image_add_adapter_foreground"
+        />
+    <!-- endregion  -->
+    <!-- region PRODUCT ITEM NAME -->
+    <TextView
+        android:id="@+id/product_item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/product_item_description"
+        app:layout_constraintStart_toEndOf="@id/activity_product_form_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_weight="0.7"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="5dp"
+        android:textSize="20sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/gray"
+        tools:text="@tools:sample/lorem/random"
+        />
+    <!-- endregion -->
+    <!-- region PRODUCT ITEM DESCRIPTION -->
+    <TextView
+        android:id="@+id/product_item_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/product_item_name"
+        app:layout_constraintBottom_toTopOf="@id/product_item_price"
+        app:layout_constraintStart_toStartOf="@id/product_item_name"
+        app:layout_constraintEnd_toEndOf="@id/product_item_name"
+        android:textSize="14sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_light"
+        android:textColor="@color/gray_lighter"
+        tools:text="@tools:sample/lorem/random"
+        />
+    <!-- endregion -->
+    <!-- region PRODUCT ITEM PRICE -->
+    <TextView
+        android:id="@+id/product_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/product_item_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/product_item_name"
+        app:layout_constraintEnd_toEndOf="@id/product_item_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/montserrat"
+        tools:text="R$ 5000,00"
+        />
+    <!-- endregion -->
+</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
