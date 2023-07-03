@@ -3,15 +3,13 @@ package br.com.vinma.orgs.ui.activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductFormBinding
 import br.com.vinma.orgs.databinding.DialogFormImageLoadBinding
+import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
-import coil.ImageLoader
-import coil.decode.ImageDecoderDecoder
 import coil.load
 import java.math.BigDecimal
 
@@ -35,22 +33,14 @@ class ProductFormActivity : AppCompatActivity() {
 
             dialogBinding.dialogFormImageLoadButton.setOnClickListener {
                 url = dialogBinding.dialogFormImageLoadUrl.text.toString()
-                dialogBinding.dialogFormImageLoadImageView.load(url,
-                    ImageLoader.Builder(this).components{
-                        add(ImageDecoderDecoder.Factory())
-                    }.build()
-                )
+                dialogBinding.dialogFormImageLoadImageView.loadImageOrGifWithFallBacks(this, url)
             }
 
             AlertDialog.Builder(this)
                 .setView(dialogBinding.root)
                 .setPositiveButton("Confirmar"){_,_ ->
                     val url = dialogBinding.dialogFormImageLoadUrl.text.toString()
-                    binding.activityProductFormImage.load(url,
-                        ImageLoader.Builder(this).components{
-                            add(ImageDecoderDecoder.Factory())
-                        }.build()
-                    )
+                    binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, url)
                 }
                 .setNegativeButton("Cancelar"){_,_ ->}
                 .show()

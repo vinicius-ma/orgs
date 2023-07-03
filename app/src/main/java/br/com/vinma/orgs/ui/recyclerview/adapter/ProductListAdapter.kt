@@ -2,15 +2,12 @@ package br.com.vinma.orgs.ui.recyclerview.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.vinma.orgs.databinding.ProductItemBinding
+import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
-import coil.ImageLoader
-import coil.decode.ImageDecoderDecoder
-import coil.load
 
 class ProductListAdapter(
     private val context : Context,
@@ -48,11 +45,7 @@ class ProductListAdapter(
             binding.productItemName.text = product.name
             binding.productItemDescription.text = product.description
             binding.productItemPrice.text = product.formattedPrice()
-            binding.activityProductFormImage.load(product.url,
-                ImageLoader.Builder(context).components{
-                    add(ImageDecoderDecoder.Factory())
-                }.build()
-            )
+            binding.activityProductFormImage.loadImageOrGifWithFallBacks(context, product.url)
         }
     }
 
