@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    >
+    style="@style/Theme.Orgs.View">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,10 +21,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 android:clickable="true"
-                android:background="@color/gray"
                 android:contentDescription="@string/product_item_image_descr"
                 android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/ic_image_add"
+                android:background="@color/ic_image_add_background"
+                app:srcCompat="@drawable/ic_image_add_foreground"
                 />
         <!-- endregion -->
         <!-- region PRODUCT NAME -->
@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
             app:startIconDrawable="@drawable/baseline_text_fields_24"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Theme.Orgs.Text.InputLayout"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/activity_product_form_name"
@@ -49,6 +49,7 @@
                 android:hint="@string/activity_product_form_name_hint"
                 android:inputType="textCapWords|textAutoComplete"
                 android:nextFocusForward="@id/dialog_form_image_load_url"
+                style="@style/Theme.Orgs.Text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <!-- endregion -->
@@ -64,7 +65,7 @@
             app:layout_constraintVertical_bias="0.0"
             android:layout_marginTop="16dp"
             app:startIconDrawable="@drawable/baseline_description_24"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Theme.Orgs.Text.InputLayout"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/activity_product_form_descr"
@@ -73,6 +74,7 @@
                 android:hint="@string/activity_product_form_descr_hint"
                 android:inputType="textAutoComplete|textCapSentences"
                 android:nextFocusForward="@id/activity_product_form_price"
+                style="@style/Theme.Orgs.Text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <!-- endregion -->
@@ -88,7 +90,7 @@
                 app:layout_constraintVertical_bias="0.0"
                 android:layout_marginTop="16dp"
                 app:startIconDrawable="@drawable/baseline_monetization_on_24"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Theme.Orgs.Text.InputLayout"
                 >
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/activity_product_form_price"
@@ -97,6 +99,7 @@
                     android:hint="@string/activity_product_form_price_hint"
                     android:inputType="numberDecimal"
                     android:nextFocusForward="@id/activity_product_form_button_save"
+                    style="@style/Theme.Orgs.Text"
                     />
             </com.google.android.material.textfield.TextInputLayout>
         <!-- endregion -->

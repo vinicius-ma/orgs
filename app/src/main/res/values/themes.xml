@@ -1,16 +1,42 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Orgs" parent="Theme.MaterialComponents">
+    <style name="Theme.Orgs" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/green_500</item>
-        <item name="colorPrimaryVariant">@color/green_700</item>
-        <item name="colorOnPrimary">@color/gray_lightest</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_200</item>
-        <item name="colorSecondaryVariant">@color/blue_700</item>
-        <item name="colorOnSecondary">@color/gray_darker</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/gray_darker</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.Material3.PopupMenu</item>
+    </style>
+    <style name="Theme.Orgs.View">
+    </style>
+    <style name="Theme.Orgs.View.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.MinWidth">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Theme.Orgs.Dialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Theme.Orgs.Dialog.Button</item>
+    </style>
+    <style name="Theme.Orgs.Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+    <style name="Theme.Orgs.Text.InputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColorHint">@color/gray_lighter</item>
+        <item name="startIconTint">@color/gray_lighter</item>
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+    </style>
+    <style name="Theme.Orgs.Dialog.Button" parent="Theme.Orgs">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>

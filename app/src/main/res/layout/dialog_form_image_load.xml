@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    style="@style/Theme.Orgs.View.Dialog"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,10 +18,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            android:background="@color/gray"
             android:scaleType="centerCrop"
             android:contentDescription="Image to load"
-            android:src="@mipmap/ic_image_add"
+            android:background="@color/ic_image_add_background"
+            android:src="@drawable/ic_image_add_foreground"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_form_image_load_button"
@@ -46,7 +47,7 @@
             app:layout_constraintVertical_bias="0.0"
             android:layout_margin="16dp"
             app:startIconDrawable="@drawable/baseline_link_24"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Theme.Orgs.Text.InputLayout"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dialog_form_image_load_url"
@@ -55,8 +56,8 @@
                 android:hint="URL da imagem"
                 android:inputType="textUri"
                 android:nextFocusForward="@id/activity_product_form_price"
+                style="@style/Theme.Orgs.Text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

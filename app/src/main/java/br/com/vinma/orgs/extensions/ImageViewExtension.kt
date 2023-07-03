@@ -6,12 +6,13 @@ import br.com.vinma.orgs.R
 import coil.ImageLoader
 import coil.decode.ImageDecoderDecoder
 import coil.load
+import com.google.android.material.color.utilities.MaterialDynamicColors.background
 
 fun ImageView.loadImageOrGifWithFallBacks(context: Context,url:String?=null){
     load(url, imageLoaderWithGifs(context) ){
-        fallback(R.mipmap.ic_image_broken)
-        error(R.mipmap.ic_image_broken)
-        placeholder(R.mipmap.ic_image_loading)
+        fallback(R.drawable.ic_image_add_adapter_foreground)
+        error(R.drawable.ic_image_broken_foreground)
+        placeholder(R.drawable.ic_image_loading_foreground)
     }
 }
 

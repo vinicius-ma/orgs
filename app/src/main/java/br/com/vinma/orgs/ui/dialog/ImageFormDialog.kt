@@ -3,6 +3,7 @@ package br.com.vinma.orgs.ui.dialog
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
+import br.com.vinma.orgs.R
 import br.com.vinma.orgs.databinding.DialogFormImageLoadBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 
@@ -24,7 +25,7 @@ class ImageFormDialog(private val context: Context) {
                 dialogFormImageLoadImageView.loadImageOrGifWithFallBacks(context, url)
             }
 
-            AlertDialog.Builder(context)
+            AlertDialog.Builder(context, R.style.Theme_Orgs_View_Dialog)
                 .setView(root)
                 .setPositiveButton("Confirmar"){_,_ ->
                     val url = dialogFormImageLoadUrl.text.toString()

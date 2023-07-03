@@ -9,11 +9,12 @@
     android:layout_marginHorizontal="8dp"
     app:cardCornerRadius="8dp"
     android:elevation="8dp"
+    style="@style/Theme.Orgs.View"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        style="@style/Theme.Orgs.View"
         >
     <!--  region IMAGEVIEW -->
     <ImageView
@@ -27,7 +28,8 @@
         app:layout_constraintHorizontal_weight="0.3"
         android:contentDescription="@string/product_item_image_descr"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_image_add_adapter"
+        android:background="@color/ic_image_add_adapter_background"
+        android:src="@drawable/ic_image_add_adapter_foreground"
         />
     <!-- endregion  -->
     <!-- region PRODUCT ITEM NAME -->
@@ -85,7 +87,7 @@
         android:textSize="18sp"
         android:lines="1"
         android:ellipsize="end"
-        android:textColor="@color/green_700"
+        android:textColor="@color/colorPrimary"
         android:fontFamily="@font/montserrat"
         tools:text="R$ 5000,00"
         />
