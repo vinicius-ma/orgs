@@ -39,7 +39,7 @@ class ProductListAdapter(
     class ViewHolder(private val binding: ProductItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        val context: Context = binding.root.context
+        private val context: Context = binding.root.context
 
         fun bind(product: Product) {
             binding.productItemName.text = product.name

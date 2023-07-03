@@ -1,16 +1,13 @@
 package br.com.vinma.orgs.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.vinma.orgs.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductFormBinding
-import br.com.vinma.orgs.databinding.DialogFormImageLoadBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
-import coil.load
+import br.com.vinma.orgs.ui.dialog.ImageFormDialog
 import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
@@ -26,26 +23,6 @@ class ProductFormActivity : AppCompatActivity() {
         configButtonSave()
         requestFocusToNameEt()
         configImageViewClick()
-
-        binding.activityProductFormImage.bringToFront()
-        binding.activityProductFormImage.setOnClickListener {
-            val dialogBinding: DialogFormImageLoadBinding = DialogFormImageLoadBinding.inflate(layoutInflater)
-
-            dialogBinding.dialogFormImageLoadButton.setOnClickListener {
-                url = dialogBinding.dialogFormImageLoadUrl.text.toString()
-                dialogBinding.dialogFormImageLoadImageView.loadImageOrGifWithFallBacks(this, url)
-            }
-
-            AlertDialog.Builder(this)
-                .setView(dialogBinding.root)
-                .setPositiveButton("Confirmar"){_,_ ->
-                    val url = dialogBinding.dialogFormImageLoadUrl.text.toString()
-                    binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, url)
-                }
-                .setNegativeButton("Cancelar"){_,_ ->}
-                .show()
-        }
-
     }
 
     private fun configButtonSave() {
@@ -53,7 +30,6 @@ class ProductFormActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             val product = createProduct()
             dao.add(product)
-            Log.e("TAG", "configButtonSave: dao.all = ${dao.getAll()}")
             finish()
         }
     }
@@ -63,16 +39,19 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
     private fun configImageViewClick() {
-        binding.activityProductFormImage.isClickable = true
+        binding.activityProductFormImage.setOnClickListener {
+            ImageFormDialog(this).show(this.url) {url ->
+                this.url = url
+                binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, url)
+            }
+        }
     }
 
     private fun createProduct(): Product {
         val nameEt = binding.activityProductFormName
         val descrEt = binding.activityProductFormDescr
         val priceEt = binding.activityProductFormPrice
-        if(url != null)  binding.activityProductFormImage.load(url)
-
-        Log.e("TAG", "createProduct: ${nameEt.text}, ${descrEt.text}, ${priceEt.text}")
+        binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, url)
 
         val name = nameEt.text.toString()
         val descr = descrEt.text.toString()
