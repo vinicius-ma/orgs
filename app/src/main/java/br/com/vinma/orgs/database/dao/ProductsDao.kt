@@ -7,7 +7,7 @@ import androidx.room.Query
 import br.com.vinma.orgs.model.Product
 
 @Dao
-interface ProductDao {
+interface ProductsDao {
 
     @Insert
     fun add(vararg products: Product)
@@ -17,5 +17,8 @@ interface ProductDao {
 
     @Query("SELECT * FROM Product")
     fun getAll(): List<Product>
+
+    @Query("SELECT * FROM Product WHERE id = :id")
+    fun findItemById(id: Long): Product?
 
 }

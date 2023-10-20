@@ -3,7 +3,8 @@ package br.com.vinma.orgs.ui.activity
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import br.com.vinma.orgs.dao.ProductsDao
+import br.com.vinma.orgs.database.AppDatabase
+import br.com.vinma.orgs.database.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductFormBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
@@ -12,7 +13,8 @@ import java.math.BigDecimal
 
 class ProductFormActivity : AppCompatActivity() {
 
-    private val dao: ProductsDao = ProductsDao()
+    private lateinit var db: AppDatabase
+    private lateinit var dao: ProductsDao
     private val binding by lazy { ActivityProductFormBinding.inflate(layoutInflater) }
     private var url: String? = null
 
@@ -20,6 +22,10 @@ class ProductFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.title = "Novo produto"
+
+        db = AppDatabase.instance(this)
+        dao = db.productsDao()
+
         configButtonSave()
         requestFocusToNameEt()
         configImageViewClick()

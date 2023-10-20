@@ -1,16 +1,26 @@
 package br.com.vinma.orgs.database
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import br.com.vinma.orgs.database.converter.Converter
-import br.com.vinma.orgs.database.dao.ProductDao
+import br.com.vinma.orgs.database.dao.ProductsDao
 import br.com.vinma.orgs.model.Product
 
 @Database(entities = [Product::class], version = 1)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun productDao(): ProductDao
+    abstract fun productsDao(): ProductsDao
+
+    companion object {
+        fun instance(context: Context): AppDatabase {
+            return Room.databaseBuilder(context, AppDatabase::class.java, "orgs.db")
+                .allowMainThreadQueries()
+                .build()
+        }
+    }
 
 }
