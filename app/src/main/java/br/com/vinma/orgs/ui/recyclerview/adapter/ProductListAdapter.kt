@@ -64,8 +64,10 @@ class ProductListAdapter(
         private val context: Context = binding.root.context
         private lateinit var product: Product
         init {
-            itemView.setOnClickListener {
-                if (::product.isInitialized) onItemClickListener(adapterPosition)
+            itemView.apply {
+                onItemClickListener = {
+                    if (::product.isInitialized) onItemClickListener(adapterPosition)
+                }
             }
         }
 
