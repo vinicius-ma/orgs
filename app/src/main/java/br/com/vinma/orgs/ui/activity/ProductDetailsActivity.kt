@@ -1,5 +1,6 @@
 package br.com.vinma.orgs.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
@@ -16,7 +17,6 @@ class ProductDetailsActivity: AppCompatActivity() {
 
     private lateinit var product: Product
     private lateinit var binding: ActivityProductDetailsBinding
-    private lateinit var db: AppDatabase
     private lateinit var dao: ProductsDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +28,13 @@ class ProductDetailsActivity: AppCompatActivity() {
         binding = ActivityProductDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        db = AppDatabase.instance(this)
-        dao = db.productsDao()
+        dao = AppDatabase.instance(this).productsDao()
+    }
 
+    override fun onResume() {
+        super.onResume()
         fulfillWithProductInfo()
         configureToolbar()
-
     }
 
     private fun fulfillWithProductInfo() {
@@ -50,7 +51,10 @@ class ProductDetailsActivity: AppCompatActivity() {
     private fun configureToolbar() {
             ProductEditMenu(this, binding.root, product,
                 {
-                    Log.wtf("ProductMenu", "onEdit")
+                    Intent(this, ProductFormActivity::class.java).apply {
+                        putExtra(Constants.KEY_PRODUCT_ID, product.id)
+                        startActivity(this)
+                    }
                 },
                 {
                     finish()

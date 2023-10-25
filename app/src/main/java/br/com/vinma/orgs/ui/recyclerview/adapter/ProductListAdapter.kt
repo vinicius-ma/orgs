@@ -2,6 +2,7 @@ package br.com.vinma.orgs.ui.recyclerview.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.databinding.ProductItemBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
+import br.com.vinma.orgs.ui.Constants
+import br.com.vinma.orgs.ui.activity.ProductFormActivity
 import br.com.vinma.orgs.ui.dialog.ProductEditMenu
 
 private const val HOLDER_BOTTOM_MARGIN_DEFAULT = 0
@@ -77,7 +80,10 @@ class ProductListAdapter(
             itemView.setOnLongClickListener {
                 val productEditMenu = ProductEditMenu(context, itemView, product,
                     {
-                        Log.wtf("ProductMenu", "onEdit")
+                        Intent(context, ProductFormActivity::class.java).apply {->
+                            putExtra(Constants.KEY_PRODUCT_ID, product.id)
+                            context.startActivity(this)
+                        }
                     },
                     {
                         update(dao.getAll(), false)

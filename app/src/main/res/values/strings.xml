@@ -15,4 +15,6 @@
     <string name="dialog_delete_product_title">Delete</string>
     <string name="dialog_delete_product_positive">Delete</string>
     <string name="dialog_delete_product_negative">Cancel</string>
+    <string name="activity_product_form_new_title">New Product</string>
+    <string name="activity_product_form_edit_title">Edit Product</string>
 </resources>

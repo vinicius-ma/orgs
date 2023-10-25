@@ -13,7 +13,7 @@ data class Product(
     val description: String,
     val price: BigDecimal,
     val url: String? = null,
-    @PrimaryKey(autoGenerate=true) var id: Long = 0L
+    @PrimaryKey(autoGenerate=true) val id: Long = 0L
 ): Serializable{
 
     fun formattedPrice(): String? {
