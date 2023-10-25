@@ -34,8 +34,8 @@ class ProductListAdapter(
     override fun getItemCount(): Int = products.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        setViewHolderBottomMargin(holder, position)
         val product = products[position]
+        setViewHolderBottomMargin(holder, position)
         holder.bind(product)
     }
 
@@ -68,8 +68,8 @@ class ProductListAdapter(
         init {
             itemView.apply {
                 onItemClickListener = {
-                    if (::product.isInitialized) onItemClickListener(adapterPosition)
-                }
+                if (::product.isInitialized) onItemClickListener(adapterPosition)
+            }
                 setOnLongClickListener {
                     val popupMenu = PopupMenu(context, it)
                     popupMenu.inflate(R.menu.menu_product_details)
@@ -82,7 +82,6 @@ class ProductListAdapter(
 
         fun bind(product: Product) {
             this.product = product
-
             binding.productItemName.text = product.name
             binding.productItemDescription.text = product.description
             binding.productItemPrice.text = product.formattedPrice()

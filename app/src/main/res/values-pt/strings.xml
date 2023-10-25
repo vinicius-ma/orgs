@@ -10,4 +10,8 @@
     <string name="activity_products_list_fab_content_descr">Adicionar produto</string>
     <string name="product_item_image_descr">Imagem de ilustração do produto</string>
     <string name="activity_products_list_fab_text">Novo Produto</string>
+    <string name="dialog_delete_product_message">Tem certeza que deseja excluir este produto?</string>
+    <string name="dialog_delete_product_title">Excluir</string>
+    <string name="dialog_delete_product_positive">Excluir</string>
+    <string name="dialog_delete_product_negative">Cancelar</string>
 </resources>
