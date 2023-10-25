@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import br.com.vinma.orgs.R
 import br.com.vinma.orgs.databinding.ProductItemBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
@@ -68,6 +70,13 @@ class ProductListAdapter(
                 onItemClickListener = {
                     if (::product.isInitialized) onItemClickListener(adapterPosition)
                 }
+                setOnLongClickListener {
+                    val popupMenu = PopupMenu(context, it)
+                    popupMenu.inflate(R.menu.menu_product_details)
+                    popupMenu.show()
+                    true
+                }
+
             }
         }
 
