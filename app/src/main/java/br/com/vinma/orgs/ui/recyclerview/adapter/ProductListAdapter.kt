@@ -2,14 +2,15 @@ package br.com.vinma.orgs.ui.recyclerview.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import br.com.vinma.orgs.R
+import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.databinding.ProductItemBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
+import br.com.vinma.orgs.ui.dialog.ProductEditMenu
 
 private const val HOLDER_BOTTOM_MARGIN_DEFAULT = 0
 private const val HOLDER_BOTTOM_MARGIN_LAST = 500
@@ -54,10 +55,11 @@ class ProductListAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun update(products: List<Product>) {
+    fun update(products: List<Product>, notifyDataSetChanged: Boolean = true) {
         this.products.clear()
         this.products.addAll(products)
-        notifyDataSetChanged()
+
+        if (notifyDataSetChanged) notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: ProductItemBinding)
@@ -66,17 +68,24 @@ class ProductListAdapter(
         private val context: Context = binding.root.context
         private lateinit var product: Product
         init {
-            itemView.apply {
-                onItemClickListener = {
+
+            val dao = AppDatabase.instance(context).productsDao()
+
+            itemView.setOnClickListener {
                 if (::product.isInitialized) onItemClickListener(adapterPosition)
             }
-                setOnLongClickListener {
-                    val popupMenu = PopupMenu(context, it)
-                    popupMenu.inflate(R.menu.menu_product_details)
-                    popupMenu.show()
-                    true
-                }
-
+            itemView.setOnLongClickListener {
+                val productEditMenu = ProductEditMenu(context, itemView, product,
+                    {
+                        Log.wtf("ProductMenu", "onEdit")
+                    },
+                    {
+                        update(dao.getAll(), false)
+                        notifyItemRemoved(adapterPosition)
+                    }
+                )
+                productEditMenu.showAsPopupMenu()
+                true
             }
         }
 
