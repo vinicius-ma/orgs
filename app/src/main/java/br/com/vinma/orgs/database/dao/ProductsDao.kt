@@ -3,6 +3,7 @@ package br.com.vinma.orgs.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import br.com.vinma.orgs.model.Product
@@ -10,8 +11,8 @@ import br.com.vinma.orgs.model.Product
 @Dao
 interface ProductsDao {
 
-    @Insert
-    fun add(vararg products: Product)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun save(vararg products: Product)
 
     @Update
     fun update(vararg product: Product)

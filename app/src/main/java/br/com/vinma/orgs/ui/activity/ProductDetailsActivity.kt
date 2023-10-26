@@ -2,7 +2,6 @@ package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import br.com.vinma.orgs.database.AppDatabase
@@ -15,7 +14,7 @@ import br.com.vinma.orgs.ui.dialog.ProductEditMenu
 
 class ProductDetailsActivity: AppCompatActivity() {
 
-    private lateinit var product: Product
+    private var product: Product? = null
     private lateinit var binding: ActivityProductDetailsBinding
     private lateinit var dao: ProductsDao
 
@@ -38,21 +37,22 @@ class ProductDetailsActivity: AppCompatActivity() {
     }
 
     private fun fulfillWithProductInfo() {
-
-        product = getProductFromIntent()?: return
-
-        binding.toolbar.title = product.name
-        binding.activityProductDetailsName.text = product.name
-        binding.activityProductDetailsDescription.text = product.description
-        binding.activityProductDetailsPrice.text = product.formattedPrice()
-        binding.activityProductDetailsImage.loadImageOrGifWithFallBacks(this, product.url)
+        product = getProductFromIntent()
+        product?.let {
+            binding.toolbar.title = it.name
+            binding.activityProductDetailsName.text = it.name
+            binding.activityProductDetailsDescription.text = it.description
+            binding.activityProductDetailsPrice.text = it.formattedPrice()
+            binding.activityProductDetailsImage.loadImageOrGifWithFallBacks(this, it.url)
+        } ?: finish()
     }
 
     private fun configureToolbar() {
-            ProductEditMenu(this, binding.root, product,
+        product?.let {
+            ProductEditMenu(this, binding.root, it,
                 {
                     Intent(this, ProductFormActivity::class.java).apply {
-                        putExtra(Constants.KEY_PRODUCT_ID, product.id)
+                        putExtra(Constants.KEY_PRODUCT_ID, it.id)
                         startActivity(this)
                     }
                 },
@@ -60,6 +60,8 @@ class ProductDetailsActivity: AppCompatActivity() {
                     finish()
                 }
             ).setAsToolBar(binding.toolbar)
+        }
+
     }
 
     private fun getProductFromIntent(): Product? {

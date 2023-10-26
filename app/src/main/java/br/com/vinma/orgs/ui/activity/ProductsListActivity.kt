@@ -2,7 +2,6 @@ package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import br.com.vinma.orgs.database.AppDatabase
@@ -35,7 +34,7 @@ class ProductsListActivity: AppCompatActivity() {
         for(i in 1..numberOfProducts) {
             val price = 10 + i + i/100.0
             val description = LoremIpsum(200 + 10 * i).values.toList()[0]
-            dao.add(Product("Product $i", description, BigDecimal(price),
+            dao.save(Product("Product $i", description, BigDecimal(price),
                 "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))
         }
 

@@ -36,12 +36,19 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun loadProduct() {
         productId = intent.getLongExtra(Constants.KEY_PRODUCT_ID, -1L)
-        val product = dao.findItemById(productId) ?: return
+        val product = dao.findItemById(productId)
+
+        product?.let {
+            fulfillFormWithProductInfo(it)
+        }
+    }
+
+    private fun fulfillFormWithProductInfo(product: Product) {
         url = product.url
         supportActionBar?.title = getString(R.string.activity_product_form_edit_title)
         binding.activityProductFormName.setText(product.name)
         binding.activityProductFormDescr.setText(product.description)
-        binding.activityProductFormPrice.setText(product.price.toString())
+        binding.activityProductFormPrice.setText("${product.price}")
         binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, product.url)
     }
 
@@ -49,11 +56,7 @@ class ProductFormActivity : AppCompatActivity() {
         val saveButton: Button = binding.activityProductFormButtonSave
         saveButton.setOnClickListener {
             val product = createProduct()
-            if(productId < 0){
-                dao.add(product)
-            } else {
-                dao.update(product)
-            }
+            dao.save(product)
             finish()
         }
     }
@@ -84,10 +87,10 @@ class ProductFormActivity : AppCompatActivity() {
         var price = BigDecimal.ZERO
         if (priceString.isNotBlank()) price = BigDecimal(priceString)
 
-        if(productId>-1L){
-            return Product(name, descr, price, url, productId)
+        return if(productId>-1L){
+            Product(name, descr, price, url, productId)
         } else{
-            return Product(name, descr, price, url)
+            Product(name, descr, price, url)
         }
     }
 }
