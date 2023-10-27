@@ -13,6 +13,8 @@ import br.com.vinma.orgs.ui.menu.ProductsSortMenu
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
 import java.math.BigDecimal
 
+const val NUMBER_SAMPLE_DATA = 10
+
 class ProductsListActivity: AppCompatActivity() {
     private lateinit var db: AppDatabase
     private lateinit var dao: ProductsDao
@@ -31,16 +33,16 @@ class ProductsListActivity: AppCompatActivity() {
         configureToolBar()
         configureAdapter()
         configureFab()
-        insertTestDataIfEmpty(dao,10)
+        insertTestDataIfEmpty(dao)
     }
 
     private fun configureToolBar() {
         menu = ProductsSortMenu(this, binding.productsListToolbar, adapter)
     }
 
-    private fun insertTestDataIfEmpty(dao: ProductsDao, numberOfProducts: Int) {
+    private fun insertTestDataIfEmpty(dao: ProductsDao) {
         if(dao.getAll().isNotEmpty()) return
-        for(i in 1..numberOfProducts) {
+        for(i in 1..NUMBER_SAMPLE_DATA) {
             val price = 10 + i + i/100.0
             val description = LoremIpsum(200 + 10 * i).values.toList()[0]
             dao.save(Product("Product $i", description, BigDecimal(price),

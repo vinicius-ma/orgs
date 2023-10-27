@@ -25,11 +25,12 @@
             app:layout_constraintHorizontal_bias="0.0"
             android:foreground="@drawable/ic_action_back"
             android:foregroundGravity="center"
-            />
+            android:contentDescription="@string/return_button_description" />
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             tools:title="Example"
             android:paddingStart="60dp"
+            android:paddingEnd="0dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"

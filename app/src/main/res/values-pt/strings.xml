@@ -22,4 +22,6 @@
     <string name="menu_sort_description">Descrição</string>
     <string name="menu_sort_price">Preço</string>
     <string name="menu_sort_default">Padrão</string>
+    <string name="return_button_description">Retornar</string>
+    <string name="menu_sort_main">Filtrar</string>
 </resources>

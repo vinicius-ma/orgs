@@ -23,4 +23,6 @@
     <string name="menu_sort_description">Description</string>
     <string name="menu_sort_price">Price</string>
     <string name="menu_sort_default">Default</string>
+    <string name="return_button_description">Return</string>
+    <string name="menu_sort_main">Sort</string>
 </resources>

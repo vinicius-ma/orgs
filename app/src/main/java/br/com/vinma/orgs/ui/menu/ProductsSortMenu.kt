@@ -1,7 +1,6 @@
 package br.com.vinma.orgs.ui.menu
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import br.com.vinma.orgs.R
@@ -72,19 +71,19 @@ class ProductsSortMenu(
             }
         }
         saveLastSortedPreference(itemId)
-        toolbar.menu.findItem(R.id.products_sort).icon = AppCompatResources.getDrawable(context, iconId)
+        toolbar.menu.findItem(R.id.products_sort_main).icon = AppCompatResources.getDrawable(context, iconId)
         adapter.update(newProducts)
         return true
     }
 
     private fun saveLastSortedPreference(menuId: Int){
         preferences?.let {
-            val editor = it.edit().putInt(SHARED_PREFERENCES, menuId)
+            val editor = it.edit().putInt(PREF_LAS_SORT_ID, menuId)
             editor.apply()
         }
     }
 
     private fun getLastSortedPreference(): Int {
-        return preferences?.getInt(SHARED_PREFERENCES, R.id.products_sort_default) ?: R.id.products_sort_default
+        return preferences?.getInt(PREF_LAS_SORT_ID, R.id.products_sort_default) ?: R.id.products_sort_default
     }
 }

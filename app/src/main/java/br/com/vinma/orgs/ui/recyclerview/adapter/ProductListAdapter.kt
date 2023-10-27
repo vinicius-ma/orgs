@@ -75,7 +75,7 @@ class ProductListAdapter(
             }
             itemView.setOnLongClickListener {
                 val productEditMenu = ProductEditMenu(context, product, {
-                    Intent(context, ProductFormActivity::class.java).apply {->
+                    Intent(context, ProductFormActivity::class.java).apply {
                         putExtra(Constants.KEY_PRODUCT_ID, product.id)
                         context.startActivity(this)
                     }
