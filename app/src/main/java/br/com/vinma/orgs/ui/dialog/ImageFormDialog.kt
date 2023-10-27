@@ -16,13 +16,13 @@ class ImageFormDialog(private val context: Context) {
         DialogFormImageLoadBinding.inflate(LayoutInflater.from(context)).apply {
 
             urlDefault?.let {
-                dialogFormImageLoadImageView.loadImageOrGifWithFallBacks(context, it)
+                dialogFormImageDownload.loadImageOrGifWithFallBacks(context, it)
                 dialogFormImageLoadUrl.setText(it)
             }
 
             dialogFormImageLoadButton.setOnClickListener {
                 val url = dialogFormImageLoadUrl.text.toString()
-                dialogFormImageLoadImageView.loadImageOrGifWithFallBacks(context, url)
+                dialogFormImageDownload.loadImageOrGifWithFallBacks(context, url)
             }
 
             AlertDialog.Builder(context, R.style.Theme_Orgs_View_Dialog)
