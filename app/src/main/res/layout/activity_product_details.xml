@@ -10,6 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/back_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimaryVariant"
+            android:elevation="8dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="2dp"
+            app:layout_constraintTop_toTopOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="@id/toolbar"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:foreground="@drawable/ic_action_back"
+            android:foregroundGravity="center"
+            android:contentDescription="@string/return_button_description" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            tools:title="Example"
+            android:paddingStart="60dp"
+            android:paddingEnd="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="@color/colorOnPrimary"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:menu="@menu/product_details"
+            />
         <!-- region IMAGEVIEW -->
         <ImageView
             android:id="@+id/activity_product_details_image"
@@ -18,7 +51,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintVertical_bias="0.0"
             android:clickable="true"
             android:contentDescription="@string/product_item_image_descr"
