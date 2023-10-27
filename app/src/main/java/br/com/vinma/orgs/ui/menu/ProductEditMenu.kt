@@ -1,4 +1,4 @@
-package br.com.vinma.orgs.ui.dialog
+package br.com.vinma.orgs.ui.menu
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,15 +11,14 @@ import br.com.vinma.orgs.model.Product
 
 class ProductEditMenu(
     private val context: Context,
-    private val view : View,
     private val product: Product,
-    private val onEdit : (product: Product) -> Unit,
+    private val onEdit: (product: Product) -> Unit,
     private val onDelete: (product: Product) -> Unit
 ) {
 
-    fun showAsPopupMenu() {
+    fun showAsPopupMenu(view: View) {
         val popupMenu = PopupMenu(context, view)
-        popupMenu.menuInflater.inflate(R.menu.menu_product_details, popupMenu.menu)
+        popupMenu.menuInflater.inflate(R.menu.product_details, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             doWhen(menuItem.itemId)
         }
@@ -38,12 +37,10 @@ class ProductEditMenu(
                 onEdit(product)
                 true
             }
-
             R.id.menu_product_details_delete -> {
                 confirmDeletion()
                 true
             }
-
             else -> {
                 false
             }

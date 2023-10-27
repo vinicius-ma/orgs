@@ -24,14 +24,19 @@ class ProductFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        supportActionBar?.title = getString(R.string.activity_product_form_new_title)
+        supportActionBar?.hide()
 
         dao = AppDatabase.instance(this).productsDao()
 
         loadProduct()
-        configButtonSave()
+        configureButtons()
         requestFocusToNameEt()
         configImageViewClick()
+    }
+
+    private fun configureButtons() {
+        configureButtonSave()
+        configureButtonBack()
     }
 
     private fun loadProduct() {
@@ -52,7 +57,13 @@ class ProductFormActivity : AppCompatActivity() {
         binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, product.url)
     }
 
-    private fun configButtonSave() {
+    private fun configureButtonBack(){
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun configureButtonSave() {
         val saveButton: Button = binding.activityProductFormButtonSave
         saveButton.setOnClickListener {
             val product = createProduct()

@@ -16,4 +16,10 @@
     <string name="dialog_delete_product_negative">Cancelar</string>
     <string name="activity_product_form_new_title">Novo produto</string>
     <string name="activity_product_form_edit_title">Editar Produto</string>
+    <string name="menu_edit_title">Editar</string>
+    <string name="menu_delete_title">Remover</string>
+    <string name="menu_sort_name">Nome</string>
+    <string name="menu_sort_description">Descrição</string>
+    <string name="menu_sort_price">Preço</string>
+    <string name="menu_sort_default">Padrão</string>
 </resources>

@@ -1,9 +1,7 @@
 package br.com.vinma.orgs.ui.recyclerview.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +11,10 @@ import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants
 import br.com.vinma.orgs.ui.activity.ProductFormActivity
-import br.com.vinma.orgs.ui.dialog.ProductEditMenu
+import br.com.vinma.orgs.ui.menu.ProductEditMenu
 
 private const val HOLDER_BOTTOM_MARGIN_DEFAULT = 0
-private const val HOLDER_BOTTOM_MARGIN_LAST = 500
+private const val HOLDER_BOTTOM_MARGIN_LAST = 250
 
 class ProductListAdapter(
     private val context : Context,
@@ -57,12 +55,10 @@ class ProductListAdapter(
         holder.itemView.layoutParams = params
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun update(products: List<Product>, notifyDataSetChanged: Boolean = true) {
         this.products.clear()
         this.products.addAll(products)
-
-        if (notifyDataSetChanged) notifyDataSetChanged()
+        if(notifyDataSetChanged) notifyItemRangeChanged(0, products.size)
     }
 
     inner class ViewHolder(private val binding: ProductItemBinding)
@@ -78,19 +74,17 @@ class ProductListAdapter(
                 if (::product.isInitialized) onItemClickListener(adapterPosition)
             }
             itemView.setOnLongClickListener {
-                val productEditMenu = ProductEditMenu(context, itemView, product,
-                    {
-                        Intent(context, ProductFormActivity::class.java).apply {->
-                            putExtra(Constants.KEY_PRODUCT_ID, product.id)
-                            context.startActivity(this)
-                        }
-                    },
-                    {
-                        update(dao.getAll(), false)
-                        notifyItemRemoved(adapterPosition)
+                val productEditMenu = ProductEditMenu(context, product, {
+                    Intent(context, ProductFormActivity::class.java).apply {->
+                        putExtra(Constants.KEY_PRODUCT_ID, product.id)
+                        context.startActivity(this)
                     }
-                )
-                productEditMenu.showAsPopupMenu()
+                }
+                ) {
+                    update(dao.getAll(), false)
+                    notifyItemRemoved(adapterPosition)
+                }
+                productEditMenu.showAsPopupMenu(itemView)
                 true
             }
         }

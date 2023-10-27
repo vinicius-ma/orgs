@@ -1,5 +1,6 @@
 package br.com.vinma.orgs.database.dao
 
+import android.util.Log
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,10 +21,28 @@ interface ProductsDao {
     @Delete
     fun delete(vararg product: Product)
 
+    @Query("SELECT * FROM Product WHERE id = :id")
+    fun findItemById(id: Long): Product?
+
     @Query("SELECT * FROM Product")
     fun getAll(): List<Product>
 
-    @Query("SELECT * FROM Product WHERE id = :id")
-    fun findItemById(id: Long): Product?
+    @Query("SELECT * FROM Product ORDER BY name ASC")
+    fun getSortedNameAsc(): List<Product>
+
+    @Query("SELECT * FROM Product ORDER BY name DESC")
+    fun getSortedNameDesc(): List<Product>
+
+    @Query("SELECT * FROM Product ORDER BY description ASC")
+    fun getSortedDescriptionAsc(): List<Product>
+
+    @Query("SELECT * FROM Product ORDER BY description DESC")
+    fun getSortedDescriptionDesc(): List<Product>
+
+    @Query("SELECT * FROM Product ORDER BY price ASC")
+    fun getSortedPriceAsc(): List<Product>
+
+    @Query("SELECT * FROM Product ORDER BY price DESC")
+    fun getSortedPriceDesc(): List<Product>
 
 }

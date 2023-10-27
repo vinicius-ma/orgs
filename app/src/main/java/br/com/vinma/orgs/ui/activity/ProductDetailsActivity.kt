@@ -10,7 +10,7 @@ import br.com.vinma.orgs.databinding.ActivityProductDetailsBinding
 import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants
-import br.com.vinma.orgs.ui.dialog.ProductEditMenu
+import br.com.vinma.orgs.ui.menu.ProductEditMenu
 
 class ProductDetailsActivity: AppCompatActivity() {
 
@@ -26,8 +26,13 @@ class ProductDetailsActivity: AppCompatActivity() {
 
         binding = ActivityProductDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configureButtonBack()
 
         dao = AppDatabase.instance(this).productsDao()
+    }
+
+    private fun configureButtonBack() {
+        binding.backButton.setOnClickListener { finish() }
     }
 
     override fun onResume() {
@@ -49,17 +54,15 @@ class ProductDetailsActivity: AppCompatActivity() {
 
     private fun configureToolbar() {
         product?.let {
-            ProductEditMenu(this, binding.root, it,
-                {
-                    Intent(this, ProductFormActivity::class.java).apply {
-                        putExtra(Constants.KEY_PRODUCT_ID, it.id)
-                        startActivity(this)
-                    }
-                },
-                {
-                    finish()
+            ProductEditMenu(this, it, {
+                Intent(this, ProductFormActivity::class.java).apply {
+                    putExtra(Constants.KEY_PRODUCT_ID, it.id)
+                    startActivity(this)
                 }
-            ).setAsToolBar(binding.toolbar)
+            }
+            ) {
+                finish()
+            }.setAsToolBar(binding.toolbar)
         }
 
     }
