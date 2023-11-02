@@ -11,11 +11,15 @@ import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants
 import br.com.vinma.orgs.ui.menu.ProductsSortMenu
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 const val NUMBER_SAMPLE_DATA = 10
 
-class ProductsListActivity: AppCompatActivity() {
+class ProductsListActivity: OrgsActivity() {
     private lateinit var db: AppDatabase
     private lateinit var dao: ProductsDao
     private val adapter = ProductListAdapter(this)
@@ -41,14 +45,24 @@ class ProductsListActivity: AppCompatActivity() {
     }
 
     private fun insertTestDataIfEmpty(dao: ProductsDao) {
-        if(dao.getAll().isNotEmpty()) return
-        for(i in 1..NUMBER_SAMPLE_DATA) {
-            val price = 10 + i + i/100.0
-            val description = LoremIpsum(200 + 10 * i).values.toList()[0]
-            dao.save(Product("Product $i", description, BigDecimal(price),
-                "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))
+        scope.launch {
+            dao.getAll().let {
+                delay(10000)
+                if(it.isEmpty()) {
+                    for(i in 1..NUMBER_SAMPLE_DATA) {
+                        val price = 10 + i + i/100.0
+                        val description = LoremIpsum(200 + 10 * i).values.toList()[0]
+                        dao.save(Product("Product $i", description, BigDecimal(price),
+                            "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))
+                    }
+                }
+            }.also {
+                val products = dao.getAll()
+                withContext(Dispatchers.Main) {
+                    adapter.update(products)
+                }
+            }
         }
-        adapter.update(dao.getAll())
     }
 
     override fun onResume() {
@@ -70,7 +84,6 @@ class ProductsListActivity: AppCompatActivity() {
     private fun configureAdapter() {
         val recyclerView = binding.activityProductListRecyclerview
         recyclerView.adapter = adapter
-
         adapter.onItemClickListener = {position ->
             val intent = Intent(
                 this@ProductsListActivity,
@@ -81,6 +94,5 @@ class ProductsListActivity: AppCompatActivity() {
             }
             startActivity(intent)
         }
-
     }
 }

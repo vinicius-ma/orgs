@@ -12,8 +12,8 @@ android {
         applicationId "br.com.vinma.orgs"
         minSdk 28
         targetSdk 34
-        versionCode 20
-        versionName "2.0.0"
+        versionCode 21
+        versionName "2.1.0-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -69,6 +69,7 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
     implementation 'io.coil-kt:coil:2.4.0'
     implementation("io.coil-kt:coil-gif:2.4.0")
 

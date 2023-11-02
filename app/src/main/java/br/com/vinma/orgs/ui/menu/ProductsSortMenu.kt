@@ -9,6 +9,10 @@ import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants.Companion.PREF_LAS_SORT_ID
 import br.com.vinma.orgs.ui.Constants.Companion.SHARED_PREFERENCES
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductsSortMenu(
     private val context: Context,
@@ -18,6 +22,7 @@ class ProductsSortMenu(
 
     private val dao = AppDatabase.instance(context).productsDao()
     private val preferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     init {
         setAsToolBar()
@@ -35,45 +40,54 @@ class ProductsSortMenu(
     }
 
     private fun doWhen(itemId: Int): Boolean{
-        val newProducts: List<Product>
-        val iconId: Int
-        when (itemId) {
-            R.id.products_sort_default -> {
-                iconId = R.drawable.ic_action_sort
-                newProducts = dao.getAll()
+        var returningValue = true
+        var newProducts: List<Product>? = null
+        var iconId: Int? = null
+        scope.launch {
+            when (itemId) {
+                R.id.products_sort_default -> {
+                    iconId = R.drawable.ic_action_sort
+                    newProducts = dao.getAll()
+                }
+                R.id.products_sort_name_ascending -> {
+                    iconId = R.drawable.ic_action_sort_name
+                    newProducts = dao.getSortedNameAsc()
+                }
+                R.id.products_sort_name_descending -> {
+                    iconId = R.drawable.ic_action_sort_name
+                    newProducts = dao.getSortedNameDesc()
+                }
+                R.id.products_sort_description_ascending -> {
+                    iconId = R.drawable.ic_action_sort_description
+                    newProducts = dao.getSortedDescriptionAsc()
+                }
+                R.id.products_sort_description_descending -> {
+                    iconId = R.drawable.ic_action_sort_description
+                    newProducts = dao.getSortedDescriptionDesc()
+                }
+                R.id.products_sort_price_ascending -> {
+                    iconId = R.drawable.ic_action_sort_price
+                    newProducts = dao.getSortedPriceAsc()
+                }
+                R.id.products_sort_price_descending -> {
+                    iconId = R.drawable.ic_action_sort_price
+                    newProducts = dao.getSortedPriceDesc()
+                }
+                else -> {
+                    returningValue = false
+                }
             }
-            R.id.products_sort_name_ascending -> {
-                iconId = R.drawable.ic_action_sort_name
-                newProducts = dao.getSortedNameAsc()
+            saveLastSortedPreference(itemId)
+            withContext(Dispatchers.Main){
+                iconId?.let {
+                    val menuItem = toolbar.menu.findItem(R.id.products_sort_main)
+                    menuItem.icon = AppCompatResources.getDrawable(context, it)
+                }
+                newProducts?.let{adapter.update(it)}
             }
-            R.id.products_sort_name_descending -> {
-                iconId = R.drawable.ic_action_sort_name
-                newProducts = dao.getSortedNameDesc()
-            }
-            R.id.products_sort_description_ascending -> {
-                iconId = R.drawable.ic_action_sort_description
-                newProducts = dao.getSortedDescriptionAsc()
-            }
-            R.id.products_sort_description_descending -> {
-                iconId = R.drawable.ic_action_sort_description
-                newProducts = dao.getSortedDescriptionDesc()
-            }
-            R.id.products_sort_price_ascending -> {
-                iconId = R.drawable.ic_action_sort_price
-                newProducts = dao.getSortedPriceAsc()
-            }
-            R.id.products_sort_price_descending -> {
-                iconId = R.drawable.ic_action_sort_price
-                newProducts = dao.getSortedPriceDesc()
-            }
-            else -> {
-                return false
-            }
+
         }
-        saveLastSortedPreference(itemId)
-        toolbar.menu.findItem(R.id.products_sort_main).icon = AppCompatResources.getDrawable(context, iconId)
-        adapter.update(newProducts)
-        return true
+        return returningValue
     }
 
     private fun saveLastSortedPreference(menuId: Int){

@@ -2,7 +2,6 @@ package br.com.vinma.orgs.ui.activity
 
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import br.com.vinma.orgs.R
 import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.database.dao.ProductsDao
@@ -11,15 +10,19 @@ import br.com.vinma.orgs.extensions.loadImageOrGifWithFallBacks
 import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants
 import br.com.vinma.orgs.ui.dialog.ImageFormDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
-class ProductFormActivity : AppCompatActivity() {
+class ProductFormActivity : OrgsActivity() {
 
     private lateinit var dao: ProductsDao
     private var productId: Long = -1L
     private val binding by lazy { ActivityProductFormBinding.inflate(layoutInflater) }
     private var url: String? = null
 
+    private val nameEt by lazy {binding.activityProductFormName}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +44,24 @@ class ProductFormActivity : AppCompatActivity() {
 
     private fun loadProduct() {
         productId = intent.getLongExtra(Constants.KEY_PRODUCT_ID, -1L)
-        val product = dao.findItemById(productId)
 
-        product?.let {
-            fulfillFormWithProductInfo(it)
+        scope.launch {
+            dao.findItemById(productId)?.let {
+                withContext(Dispatchers.Main) {
+                    fulfillFormWithProductInfo(it)
+                    binding.toolbar.title = getString(R.string.activity_product_form_edit_title)
+                }
+            }
+            withContext(Dispatchers.Main){
+                nameEt.setSelection(nameEt.length())
+            }
         }
     }
 
     private fun fulfillFormWithProductInfo(product: Product) {
         url = product.url
         supportActionBar?.title = getString(R.string.activity_product_form_edit_title)
-        binding.activityProductFormName.setText(product.name)
+        nameEt.setText(product.name)
         binding.activityProductFormDescr.setText(product.description)
         binding.activityProductFormPrice.setText("${product.price}")
         binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, product.url)
@@ -67,13 +77,16 @@ class ProductFormActivity : AppCompatActivity() {
         val saveButton: Button = binding.activityProductFormButtonSave
         saveButton.setOnClickListener {
             val product = createProduct()
-            dao.save(product)
-            finish()
+            scope.launch {
+                dao.save(product)
+                finish()
+            }
         }
     }
 
     private fun requestFocusToNameEt() {
-        binding.activityProductFormName.requestFocus()
+        val nameEt = nameEt
+        nameEt.requestFocus()
     }
 
     private fun configImageViewClick() {
@@ -86,7 +99,7 @@ class ProductFormActivity : AppCompatActivity() {
     }
 
     private fun createProduct(): Product {
-        val nameEt = binding.activityProductFormName
+        val nameEt = nameEt
         val descrEt = binding.activityProductFormDescr
         val priceEt = binding.activityProductFormPrice
         binding.activityProductFormImage.loadImageOrGifWithFallBacks(this, url)
