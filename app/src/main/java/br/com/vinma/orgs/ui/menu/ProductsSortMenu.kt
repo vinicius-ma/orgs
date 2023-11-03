@@ -85,7 +85,6 @@ class ProductsSortMenu(
                 }
                 newProducts?.let{adapter.update(it)}
             }
-
         }
         return returningValue
     }

@@ -12,6 +12,10 @@ import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants
 import br.com.vinma.orgs.ui.activity.ProductFormActivity
 import br.com.vinma.orgs.ui.menu.ProductEditMenu
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val HOLDER_BOTTOM_MARGIN_DEFAULT = 0
 private const val HOLDER_BOTTOM_MARGIN_LAST = 250
@@ -24,8 +28,11 @@ class ProductListAdapter(
     lateinit var onItemClickListener: (position: Int) -> Unit
 
     private val products = products.toMutableList()
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     fun positionToId(position: Int) = products[position].id
+
+    fun idToPosition(id: Long) = products.indexOfFirst { it.id == id }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ProductItemBinding.inflate(
@@ -61,6 +68,12 @@ class ProductListAdapter(
         if(notifyDataSetChanged) notifyItemRangeChanged(0, products.size)
     }
 
+    fun delete(productId: Long) {
+        val position = idToPosition(productId)
+        products.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     inner class ViewHolder(private val binding: ProductItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
@@ -75,15 +88,18 @@ class ProductListAdapter(
             }
             itemView.setOnLongClickListener {
                 val productEditMenu = ProductEditMenu(context, product, {
-                    Intent(context, ProductFormActivity::class.java).apply {
-                        putExtra(Constants.KEY_PRODUCT_ID, product.id)
-                        context.startActivity(this)
-                    }
-                }
-                ) {
-                    update(dao.getAll(), false)
-                    notifyItemRemoved(adapterPosition)
-                }
+                        Intent(context, ProductFormActivity::class.java).apply {
+                            putExtra(Constants.KEY_PRODUCT_ID, product.id)
+                            context.startActivity(this)
+                        }
+                    },{
+                        scope.launch {
+                            update(dao.getAll(), false)
+                            withContext(Dispatchers.Main){
+                                notifyItemRemoved(adapterPosition)
+                            }
+                        }
+                    })
                 productEditMenu.showAsPopupMenu(itemView)
                 true
             }

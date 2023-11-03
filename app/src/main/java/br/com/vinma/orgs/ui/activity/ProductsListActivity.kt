@@ -2,6 +2,9 @@ package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import br.com.vinma.orgs.database.AppDatabase
@@ -25,6 +28,7 @@ class ProductsListActivity: OrgsActivity() {
     private val adapter = ProductListAdapter(this)
     private val binding by lazy { ActivityProductsListBinding.inflate(layoutInflater) }
     private lateinit var menu: ProductsSortMenu
+    private val register = getActivityResultRegister()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,29 @@ class ProductsListActivity: OrgsActivity() {
         configureAdapter()
         configureFab()
         insertTestDataIfEmpty(dao)
+    }
+
+    private fun getActivityResultRegister(): ActivityResultLauncher<Intent> {
+        return registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ){result ->
+            if(result.resultCode == RESULT_OK) {
+                Log.wtf("DEBUGG", "onActivityResult")
+                result.data?.let {
+                    if(it.hasExtra(Constants.KEY_PRODUCT_REMOVED_ID)) {
+                        val productId = it.getLongExtra(Constants.KEY_PRODUCT_REMOVED_ID, -1L)
+                        Log.wtf("DEBUGG", "onActivityResult productId = $productId")
+                        adapter.delete(productId)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.wtf("DEBUGG", "onResume")
+        menu.executeLastSort()
     }
 
     private fun configureToolBar() {
@@ -56,18 +83,8 @@ class ProductsListActivity: OrgsActivity() {
                             "https://media.tenor.com/_ug_rmdmfhIAAAAS/vegetables.gif"))
                     }
                 }
-            }.also {
-                val products = dao.getAll()
-                withContext(Dispatchers.Main) {
-                    adapter.update(products)
-                }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        menu.executeLastSort()
     }
 
     private fun configureFab() {
@@ -85,14 +102,14 @@ class ProductsListActivity: OrgsActivity() {
         val recyclerView = binding.activityProductListRecyclerview
         recyclerView.adapter = adapter
         adapter.onItemClickListener = {position ->
-            val intent = Intent(
+            Intent(
                 this@ProductsListActivity,
                 ProductDetailsActivity::class.java
-            ).apply {
+            ).let {
                 val productId = adapter.positionToId(position)
-                putExtra(Constants.KEY_PRODUCT_ID, productId)
+                it.putExtra(Constants.KEY_PRODUCT_ID, productId)
+                register.launch(it)
             }
-            startActivity(intent)
         }
     }
 }

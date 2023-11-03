@@ -2,12 +2,18 @@ package br.com.vinma.orgs.ui.menu
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import br.com.vinma.orgs.R
 import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductEditMenu(
     private val context: Context,
@@ -15,6 +21,7 @@ class ProductEditMenu(
     private val onEdit: (product: Product) -> Unit,
     private val onDelete: (product: Product) -> Unit
 ) {
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     fun showAsPopupMenu(view: View) {
         val popupMenu = PopupMenu(context, view)
@@ -57,8 +64,12 @@ class ProductEditMenu(
             .setTitle(context.getString(R.string.dialog_delete_product_title))
             .setMessage(context.getString(R.string.dialog_delete_product_message))
             .setPositiveButton(R.string.dialog_delete_product_positive) { _, _ ->
-                AppDatabase.instance(context).productsDao().delete(product)
-                onDelete(product)
+                scope.launch {
+                    AppDatabase.instance(context).productsDao().delete(product)
+                    withContext(Dispatchers.Main) {
+                        onDelete(product)
+                    }
+                }
             }
             .setNegativeButton(context.getString(R.string.dialog_delete_product_negative), null)
     }
