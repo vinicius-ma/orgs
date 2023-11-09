@@ -2,6 +2,7 @@ package br.com.vinma.orgs.ui.activity
 
 import android.os.Bundle
 import android.widget.Button
+import androidx.lifecycle.lifecycleScope
 import br.com.vinma.orgs.R
 import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.database.dao.ProductsDao
@@ -45,16 +46,14 @@ class ProductFormActivity : OrgsActivity() {
     private fun loadProduct() {
         productId = intent.getLongExtra(Constants.KEY_PRODUCT_ID, -1L)
 
-        scope.launch {
+        lifecycleScope.launch {
             dao.findItemById(productId)?.let {
                 withContext(Dispatchers.Main) {
                     fulfillFormWithProductInfo(it)
                     binding.toolbar.title = getString(R.string.activity_product_form_edit_title)
                 }
             }
-            withContext(Dispatchers.Main){
-                nameEt.setSelection(nameEt.length())
-            }
+            nameEt.setSelection(nameEt.length())
         }
     }
 
@@ -77,7 +76,7 @@ class ProductFormActivity : OrgsActivity() {
         val saveButton: Button = binding.activityProductFormButtonSave
         saveButton.setOnClickListener {
             val product = createProduct()
-            scope.launch {
+            lifecycleScope.launch {
                 dao.save(product)
                 finish()
             }

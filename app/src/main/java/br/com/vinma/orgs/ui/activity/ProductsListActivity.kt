@@ -2,11 +2,10 @@ package br.com.vinma.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import androidx.lifecycle.lifecycleScope
 import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.database.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductsListBinding
@@ -14,10 +13,8 @@ import br.com.vinma.orgs.model.Product
 import br.com.vinma.orgs.ui.Constants
 import br.com.vinma.orgs.ui.menu.ProductsSortMenu
 import br.com.vinma.orgs.ui.recyclerview.adapter.ProductListAdapter
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 const val NUMBER_SAMPLE_DATA = 10
@@ -49,11 +46,9 @@ class ProductsListActivity: OrgsActivity() {
             ActivityResultContracts.StartActivityForResult()
         ){result ->
             if(result.resultCode == RESULT_OK) {
-                Log.wtf("DEBUGG", "onActivityResult")
                 result.data?.let {
                     if(it.hasExtra(Constants.KEY_PRODUCT_REMOVED_ID)) {
                         val productId = it.getLongExtra(Constants.KEY_PRODUCT_REMOVED_ID, -1L)
-                        Log.wtf("DEBUGG", "onActivityResult productId = $productId")
                         adapter.delete(productId)
                     }
                 }
@@ -63,7 +58,6 @@ class ProductsListActivity: OrgsActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.wtf("DEBUGG", "onResume")
         menu.executeLastSort()
     }
 
@@ -72,7 +66,7 @@ class ProductsListActivity: OrgsActivity() {
     }
 
     private fun insertTestDataIfEmpty(dao: ProductsDao) {
-        scope.launch {
+        lifecycleScope.launch {
             dao.getAll().let {
                 delay(10000)
                 if(it.isEmpty()) {

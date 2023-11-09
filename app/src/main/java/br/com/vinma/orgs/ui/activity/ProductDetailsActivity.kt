@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.vinma.orgs.database.AppDatabase
 import br.com.vinma.orgs.database.dao.ProductsDao
 import br.com.vinma.orgs.databinding.ActivityProductDetailsBinding
@@ -19,7 +20,6 @@ import kotlinx.coroutines.withContext
 
 class ProductDetailsActivity: OrgsActivity() {
 
-    private var product: Product? = null
     private lateinit var binding: ActivityProductDetailsBinding
     private lateinit var dao: ProductsDao
 
@@ -47,18 +47,15 @@ class ProductDetailsActivity: OrgsActivity() {
 
     private fun fulfillWithProductInfo() {
         val context = this
-        scope.launch {
-            product = getProductFromIntent()
-            withContext(Dispatchers.Main) {
-                product?.let {
-                    binding.toolbar.title = it.name
-                    binding.activityProductDetailsName.text = it.name
-                    binding.activityProductDetailsDescription.text = it.description
-                    binding.activityProductDetailsPrice.text = it.formattedPrice()
-                    binding.activityProductDetailsImage.loadImageOrGifWithFallBacks(context, it.url)
-                    configureToolbar(it)
-                } ?: finish()
-            }
+        lifecycleScope.launch {
+            getProductFromIntent()?.let {
+                binding.toolbar.title = it.name
+                binding.activityProductDetailsName.text = it.name
+                binding.activityProductDetailsDescription.text = it.description
+                binding.activityProductDetailsPrice.text = it.formattedPrice()
+                binding.activityProductDetailsImage.loadImageOrGifWithFallBacks(context, it.url)
+                configureToolbar(it)
+            } ?: finish()
         }
     }
 
@@ -77,7 +74,7 @@ class ProductDetailsActivity: OrgsActivity() {
         }).setAsToolBar(binding.toolbar)
     }
 
-    private fun getProductFromIntent(): Product? {
+    private suspend fun getProductFromIntent(): Product? {
         val productId = intent.getLongExtra(Constants.KEY_PRODUCT_ID, -1L)
         return dao.findItemById(productId)
     }
